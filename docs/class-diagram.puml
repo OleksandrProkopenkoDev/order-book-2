@@ -1,0 +1,50 @@
+@startuml
+
+title Order Book Microservice
+
+class WebSocketConfig {
+    +configureWebSocketConnection(): void
+}
+
+class Order {
+    -double price
+    -double quantity
+}
+
+class OrderBook {
+    -long lastUpdateId
+    -long eventTime
+    -long transactionTime
+    -String symbol
+    -String pair
+    -List<Order> bids
+    -List<Order> asks
+    +getBids(): List<Order>
+    +getAsks(): List<Order>
+}
+
+class OrderBookWebSocketListener {
+    -OrderBook orderBook
+    +onMessage(String message): void
+    +handleWebSocketMessage(): void
+}
+
+class OrderBookService {
+    -OrderBook orderBook
+    +initializeOrderBook(): void
+    +updateOrderBook(): void
+    +getOrderBook(int limit): OrderBook
+}
+
+class OrderBookController {
+    -OrderBookService orderBookService
+    +getOrderBook(int limit): OrderBook
+}
+
+WebSocketConfig --> OrderBookWebSocketListener : "configures"
+OrderBookWebSocketListener --> OrderBook : "updates"
+OrderBookService --> OrderBook : "manages"
+OrderBookController --> OrderBookService : "calls"
+OrderBook --> Order : "contains"
+
+@enduml
