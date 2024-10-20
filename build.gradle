@@ -19,6 +19,11 @@ repositories {
 
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-web'
+    // Spring WebFlux dependency for reactive support
+    implementation 'org.springframework.boot:spring-boot-starter-webflux'
+
+    // Reactor Netty dependency for WebSocket client
+    implementation 'io.projectreactor.netty:reactor-netty:1.1.21'
 
     implementation 'org.springframework.boot:spring-boot-starter-websocket'
 
